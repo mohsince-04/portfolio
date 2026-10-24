@@ -1,0 +1,154 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import About from '../components/About.astro';
+import Vision from '../components/Vision.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<html lang="en" class="catppuccin-macchiato bg-ctp-crust text-ctp-text selection:bg-ctp-surface1 selection:text-ctp-rosewater scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mohsin Nisar | Systems & AI Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <style>
+      /* Pure Transparent Card Hover Glow */
+      .glow-card {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .glow-card:hover {
+        box-shadow: 0 0 30px -5px rgba(138, 173, 244, 0.2), 0 0 10px -2px rgba(138, 173, 244, 0.08);
+        transform: translateY(-3px);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* Click Highlight Animation for All Sections */
+      @keyframes highlightPulse {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(138, 173, 244, 0.4);
+        }
+        50% {
+          transform: scale(1.02);
+          box-shadow: 0 0 30px 8px rgba(138, 173, 244, 0.3);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(138, 173, 244, 0);
+        }
+      }
+
+      .animate-highlight {
+        animation: highlightPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .delay-1 { animation-delay: 0.1s; opacity: 0; }
+      .delay-2 { animation-delay: 0.25s; opacity: 0; }
+      .delay-3 { animation-delay: 0.4s; opacity: 0; }
+      .delay-4 { animation-delay: 0.55s; opacity: 0; }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      .animate-blink {
+        animation: blink 1s infinite;
+      }
+    </style>
+  </head>
+  
+  <body class="font-sans antialiased min-h-screen w-full pl-8 pr-8 md:pl-16 md:pr-12 lg:pl-24 lg:pr-16 py-12 lg:py-20 selection:bg-ctp-blue selection:text-ctp-crust relative overflow-x-hidden">
+    
+    <!-- Background Ambient Video Backdrop -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none bg-[#11111b] transform-gpu">
+      <div class="absolute inset-0 z-0 bg-[#11111b] opacity-75"></div>
+      <canvas 
+        id="bg-canvas" 
+        class="w-full h-full object-cover relative z-10 opacity-50 transform-gpu"
+      ></canvas>
+    </div>
+
+    <!-- Left-Aligned Asymmetric Grid -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-start max-w-[1600px]">
+      <!-- Left Sidebar (Aligned directly to the left screen margin) -->
+      <div class="lg:col-span-7 lg:sticky lg:top-20">
+        <Sidebar />
+      </div>
+
+      <!-- Right Column (Stacked content cards) -->
+      <main class="lg:col-span-5 space-y-16 mt-12 lg:mt-0">
+        <About />
+        <Vision />
+        <Projects />
+        <Contact />
+        <Footer />
+      </main>
+    </div>
+
+    <script>
+      // In-memory video rendering background
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+      
+      const videoSource = document.createElement('video');
+      videoSource.src = '/assets/hero-bg.mp4';
+      videoSource.crossOrigin = 'anonymous';
+      videoSource.loop = true;
+      videoSource.muted = true;
+      videoSource.playsInline = true;
+      videoSource.autoplay = true;
+
+      function resizeCanvas() {
+        if (canvas) {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+      }
+
+      function drawVideoFrame() {
+        if (ctx && canvas && !videoSource.paused && !videoSource.ended) {
+          ctx.drawImage(videoSource, 0, 0, canvas.width, canvas.height);
+        }
+        requestAnimationFrame(drawVideoFrame);
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      videoSource.addEventListener('play', () => {
+        drawVideoFrame();
+      });
+
+      videoSource.play().catch(() => {});
+
+      // Mobile/browser autoplay policy fallbacks
+      window.addEventListener('touchstart', () => videoSource.play().catch(() => {}), { once: true });
+      window.addEventListener('scroll', () => videoSource.play().catch(() => {}), { once: true });
+    </script>
+  </body>
+</html>

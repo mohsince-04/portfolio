@@ -1,0 +1,128 @@
+<header class="w-full lg:sticky lg:top-20 lg:h-[calc(100vh-10rem)] flex flex-col justify-center space-y-12 mb-16 lg:mb-0 z-50 animate-fade-in">
+  <div class="space-y-6">
+    <!-- Name & Title -->
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-ctp-text">
+        Mohsin Nisar
+      </h1>
+      <p class="font-mono text-sm text-ctp-subtext0 mt-2">Systems &amp; AI Engineer</p>
+    </div>
+
+    <!-- Professional Bio / Tagline -->
+    <p class="text-ctp-subtext0 text-sm md:text-base leading-relaxed">
+      <i>I love exploring how systems and AI fit together, and building reliable, practical tools that turn powerful AI models into software people can actually depend on.</i>
+    </p>
+
+    <!-- Navigation Links with Dash & Active Traversal -->
+    <nav class="hidden lg:flex flex-col space-y-3 pt-4 font-mono text-xs">
+      <a href="#about" class="nav-link text-ctp-overlay2 hover:text-ctp-text transition-all duration-300 flex items-center gap-3 group py-1">
+        <span class="nav-dash text-ctp-subtext0 group-hover:text-ctp-blue transition-all duration-300">—</span>
+        <span class="nav-text transition-colors">ABOUT</span>
+      </a>
+      <!-- Indented under ABOUT -->
+      <a href="#vision" class="nav-link text-ctp-overlay2 hover:text-ctp-text transition-all duration-300 flex items-center gap-3 group py-1">
+        <span class="nav-dash text-ctp-subtext0 group-hover:text-ctp-blue transition-all duration-300">—</span>
+        <span class="nav-text transition-colors">VISION &amp; GOALS</span>
+      </a>
+      <a href="#projects" class="nav-link text-ctp-overlay2 hover:text-ctp-text transition-all duration-300 flex items-center gap-3 group py-1">
+        <span class="nav-dash text-ctp-subtext0 group-hover:text-ctp-blue transition-all duration-300">—</span>
+        <span class="nav-text transition-colors">FEATURED PROJECTS</span>
+      </a>
+      <a href="#contact" class="nav-link text-ctp-overlay2 hover:text-ctp-text transition-all duration-300 flex items-center gap-3 group py-1">
+        <span class="nav-dash text-ctp-subtext0 group-hover:text-ctp-blue transition-all duration-300">—</span>
+        <span class="nav-text transition-colors">CONTACT</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Left Sidebar Bottom: Social Icons Row -->
+  <div>
+    <ul class="flex items-center gap-5 text-ctp-overlay2" aria-label="Social media links">
+      <!-- GitHub Icon -->
+      <li>
+        <a 
+          href="https://github.com/mohsince-04" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="hover:text-ctp-text transition-colors block p-1"
+          aria-label="GitHub (opens in a new tab)"
+        >
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Mail Icon -->
+      <li>
+        <a 
+          href="mailto:mohsince04@gmail.com" 
+          class="hover:text-ctp-text transition-colors block p-1"
+          aria-label="Email"
+        >
+          <svg class="w-6 h-6 fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    // Click handler for pulse animation on target section
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const targetId = link.getAttribute('href');
+        if (!targetId || !targetId.startsWith('#')) return;
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          targetSection.classList.remove('animate-highlight');
+          void (targetSection as HTMLElement).offsetWidth; // Force DOM reflow
+          targetSection.classList.add('animate-highlight');
+        }
+      });
+    });
+
+    // Scroll Traversal Highlighting & Dynamic Indentation
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px', // Highlights when section crosses viewport threshold
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach((link) => {
+            const href = link.getAttribute('href')?.replace('#', '');
+            const dash = link.querySelector('.nav-dash');
+            const text = link.querySelector('.nav-text');
+
+            if (href === id) {
+              // Active State: Indent right, highlight text & dash
+              link.classList.add('translate-x-3', 'text-ctp-mauve');
+              link.classList.remove('text-ctp-overlay2');
+              if (dash) dash.classList.add('text-ctp-mauve');
+              if (text) text.classList.add('font-bold');
+            } else {
+              // Inactive State: Reset
+              link.classList.remove('translate-x-3', 'text-ctp-mauve');
+              link.classList.add('text-ctp-overlay2');
+              if (dash) dash.classList.remove('text-ctp-mauve');
+              if (text) text.classList.remove('font-bold');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
+  });
+</script>
